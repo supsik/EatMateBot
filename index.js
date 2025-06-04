@@ -1,0 +1,34 @@
+import TelegramBot from 'node-telegram-bot-api';
+
+const token = '7890058673:AAHZM5bpdwtB70WH3PMSHzQwK-H3xvm648o';
+const bot = new TelegramBot(token, { polling: true });
+
+bot.on('message', msg => {
+  const chatId = msg.chat.id;
+
+  bot.sendMessage(chatId, `Привет ${msg.chat.first_name}! Открой Web App по кнопке ниже:`, {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            mode: 'fullsize',
+            text: 'Открыть Web App',
+            web_app: {
+              url: 'https://eat-mate-two.vercel.app/'
+            }
+          }
+        ]
+      ]
+    }
+  });
+
+  bot.setChatMenuButton({
+    menu_button: {
+      type: 'web_app',
+      text: 'Открыть WebApp',
+      web_app: {
+        url: 'https://eat-mate-two.vercel.app/', // замени на свой URL
+      },
+    },
+  });
+});
